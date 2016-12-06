@@ -24,10 +24,6 @@ public class Main {
     private static File file;
     static Map<Integer, List<Integer>> map;
 
-    public static File getFile() {
-        return file;
-    }
-
     public static Map<Integer, List<Integer>> getMap() {
         return map;
     }
