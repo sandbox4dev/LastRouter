@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -18,19 +21,13 @@ import java.io.IOException;
 @RestController
 public class Controller {
 
-    private static final Logger log = LoggerFactory.getLogger(Service.class);
-
-    StopWatch watch = new StopWatch();
-
     @RequestMapping(value = "api/direct", method = RequestMethod.GET)
     public JsonResult getRes(@RequestParam("dep_sid") int dep_sid,
                              @RequestParam("arr_sid") int arr_sid) throws IOException {
 
         Service service = new Service();
-        watch.start();
-        boolean res = service.searchRouteInMap(dep_sid,arr_sid,service.doMapOfRoutes(Main.getFile()));
-        watch.stop();
-        log.info("Total time for reading,parsing,searching is {} sec",watch.getTotalTimeSeconds());
+
+        boolean res = service.searchRouteInMap(dep_sid,arr_sid,Main.getMap());
         return new JsonResult(dep_sid,arr_sid,res);
 
     }

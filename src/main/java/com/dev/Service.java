@@ -56,7 +56,9 @@ public class Service {
                     for (int j = 1; j < strRoutes.length; j++) {
                         stations.add(Integer.valueOf(strRoutes[j]));
                     }
-                    map.put(routeId, stations);
+                    if (!map.containsKey(routeId)) {
+                        map.put(routeId, stations);
+                    }
 
                 }
             }
@@ -67,6 +69,7 @@ public class Service {
             watch.stop();
             log.info("File {} read and parse, duration {} sec", file, watch.getTotalTimeSeconds());
         }
+        System.out.println(map.size());
         return map;
     }
 
@@ -89,14 +92,10 @@ public class Service {
 
         StopWatch watch = new StopWatch();
         watch.start();
-
+        Map.Entry<Integer, List<Integer>> entry;
         while (iterator.hasNext()) {
-            Map.Entry<Integer, List<Integer>> entry = iterator.next();
-            List<Integer> stations = entry.getValue();
-
-            if (stations.contains(dep_sid) && stations.contains(arr_sid)) {
-                watch.stop();
-                log.info("Searching in map, duration {} sec", watch.getTotalTimeSeconds());
+            entry = iterator.next();
+            if (entry.getValue().contains(dep_sid) && entry.getValue().contains(arr_sid)) {
                 return true;
             }
         }
