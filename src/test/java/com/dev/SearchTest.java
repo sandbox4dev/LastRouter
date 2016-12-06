@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,13 +35,15 @@ public class SearchTest {
         File file = new File(filepath);
 
         Service service = new Service();
-        assertTrue(service.searchRouteInMap(1, 0, service.doMapOfRoutes(file)));
-        assertTrue(service.searchRouteInMap(0, 1, service.doMapOfRoutes(file)));
-        assertTrue(service.searchRouteInMap(77, 5, service.doMapOfRoutes(file)));
-        assertTrue(service.searchRouteInMap(5, 77, service.doMapOfRoutes(file)));
-        assertFalse(service.searchRouteInMap(555, 0, service.doMapOfRoutes(file)));
-        assertFalse(service.searchRouteInMap(0, 555, service.doMapOfRoutes(file)));
-        assertFalse(service.searchRouteInMap(666, 69, service.doMapOfRoutes(file)));
+        Map<Integer,List<Integer>> map = service.doMapOfRoutes(file);
+
+                assertTrue(service.searchRouteInMap(1, 0, map));
+        assertTrue(service.searchRouteInMap(0, 1, map));
+        assertTrue(service.searchRouteInMap(77, 5, map));
+        assertTrue(service.searchRouteInMap(5, 77, map));
+        assertFalse(service.searchRouteInMap(555, 0, map));
+        assertFalse(service.searchRouteInMap(0, 555, map));
+        assertFalse(service.searchRouteInMap(666, 69, map));
 
 
     }
